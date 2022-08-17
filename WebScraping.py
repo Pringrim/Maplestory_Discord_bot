@@ -3,16 +3,6 @@ from bs4 import BeautifulSoup
 
 
 class UserChar:
-    """
-
-    """
-    User_name = ""
-    User_HTML = ""
-    User_IMG_URL = ""
-    User_server = ""
-    User_Level = ""
-    User_Class = ""
-
     def __init__(self, name=""):
         self.User_name = name
         if not name == "":
