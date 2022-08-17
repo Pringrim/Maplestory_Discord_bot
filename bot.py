@@ -114,3 +114,31 @@ async def show_TheSeed(ctx, *name):
                   icon_url=variable.ICO_TheSeed)
 
     await ctx.channel.send(embed=re, reference=ctx.message)
+
+@botpy.bot.command(aliases=["유니온", "유뇬"])
+async def union(ctx, *name):
+    if not len(name):
+        await ctx.channel.send(
+            embed=discord.Embed(title="!유니온 <닉네임>\n!유뇬 <닉네임>", description="Maple.gg 기준 해당 캐릭터의 유니온 레벨을 보여줍니다.",
+                                color=side_bar_color), reference=ctx.message)
+        return
+    name = name[0]
+
+    User_Information = WebScraping.UserChar(name)
+    # 캐릭터가 존재하지 않을 때
+    if not User_Information.is_valid():
+        return_Embed = discord.Embed(title="검색되지 않았어요!", description="잘못된 이름을 입력한 것 같아요.", color=side_bar_color)
+        return_Embed.set_footer(text="유니온 기록",
+                                icon_url=variable.ICO_TheSeed)
+        await ctx.channel.send(embed=return_Embed, reference=ctx.message)
+        return
+
+    re = discord.Embed(title=name, description="", color=side_bar_color)
+    re.add_field(name=f'{user_urank}',
+                 value=f'{user_ulevel} / 전투력 : {user_upower}\n\n서버 {user_server_rank}위\n전체 {user_rank}위\n\n기준일 : {"20" + user_date if user_date != "오늘" else user_date}',
+                 inline=False)
+    re.set_thumbnail(url=union_icon_url)
+    re.set_footer(text="유니온 등급",
+                  icon_url=union_icon_url)
+
+    await ctx.channel.send(embed=re, reference=ctx.message)

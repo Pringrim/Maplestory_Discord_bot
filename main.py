@@ -13,70 +13,7 @@ botpy.bot.run(token)
 
 
 
-@botpy.bot.command(aliases=["유니온", "유뇬"])
-async def union(ctx, *name):
-    if not len(name):
-        await ctx.channel.send(
-            embed=discord.Embed(title="!유니온 <닉네임>\n!유뇬 <닉네임>", description="Maple.gg 기준 해당 캐릭터의 유니온 레벨을 보여줍니다.",
-                                color=side_bar_color), reference=ctx.message)
-        return
-    name = name[0]
 
-    bs = BeautifulSoup(requests.get(f'https://maple.gg/u/{name}').text, "html.parser")
-    if len(bs.select(
-            "#app > div.card.border-bottom-0 > div > section > div.row.text-center > div:nth-child(2) > section > div > div.text-secondary")):
-        await ctx.channel.send(embed=discord.Embed(title="기록을 찾을 수 없습니다!", description="기록이 없거나 갱신되지 않았을 수 있습니다."),
-                               reference=ctx.message)
-        return
-
-    if not len(bs.select(
-            "#app > div.card.border-bottom-0 > div > section > div.row.text-center > div:nth-child(3) > section > div > div > div")):
-        await ctx.channel.send(embed=discord.Embed(title="기록을 찾을 수 없습니다!", description="캐릭터 이름을 확인해주세요."),
-                               reference=ctx.message)
-        return
-
-    user_union_icon = str(bs.select(
-        "#app > div.card.border-bottom-0 > div > section > div.row.text-center > div:nth-child(3) > section > div > div > img")[
-                              0])
-
-    union_icon_url = user_union_icon[user_union_icon.find("https:"):user_union_icon.rfind(".png") + 4]
-
-    user_urank_tmp = str(bs.select(
-        "#app > div.card.border-bottom-0 > div > section > div.row.text-center > div:nth-child(3) > section > div > div > div")[
-                             0])
-    user_urank = user_urank_tmp[user_urank_tmp.find(">") + 1:-6]
-
-    user_ulevel_tmp = str(bs.select(
-        "#app > div.card.border-bottom-0 > div > section > div.row.text-center > div:nth-child(3) > section > div > div > span")[
-                              0])
-    user_ulevel = user_ulevel_tmp[user_ulevel_tmp.find("Lv."):user_ulevel_tmp.rfind("</")]
-
-    user_upower_tmp = str(bs.select(
-        "#app > div.card.border-bottom-0 > div > section > div.row.text-center > div:nth-child(3) > section > footer > div.d-block.mb-1 > span")[
-                              0])
-    user_upower = user_upower_tmp[user_upower_tmp.find(" ") + 1:user_upower_tmp.rfind("</span>")]
-
-    user_rank_tmp = str(bs.select(
-        "#app > div.card.border-bottom-0 > div > section > div.row.text-center > div:nth-child(3) > section > footer > div.mb-2")[
-                            0])
-    user_rank_tmp = user_rank_tmp[user_rank_tmp.find("<span>") + 6:]
-    user_server_rank = user_rank_tmp[:user_rank_tmp.find("\n")]
-    user_rank = user_rank_tmp[user_rank_tmp.rfind("<span>") + 6:user_rank_tmp.rfind("</span>") - 1]
-
-    user_date_tmp = str(bs.select(
-        "#app > div.card.border-bottom-0 > div > section > div.row.text-center > div:nth-child(3) > section > footer > div.user-summary-date > span")[
-                            0])
-    user_date = user_date_tmp[user_date_tmp.find(":") + 2:-7]
-
-    re = discord.Embed(title=name, description="", color=side_bar_color)
-    re.add_field(name=f'{user_urank}',
-                 value=f'{user_ulevel} / 전투력 : {user_upower}\n\n서버 {user_server_rank}위\n전체 {user_rank}위\n\n기준일 : {"20" + user_date if user_date != "오늘" else user_date}',
-                 inline=False)
-    re.set_thumbnail(url=union_icon_url)
-    re.set_footer(text="유니온 등급",
-                  icon_url=union_icon_url)
-
-    await ctx.channel.send(embed=re, reference=ctx.message)
 
 
 @botpy.bot.command()
