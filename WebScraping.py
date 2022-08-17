@@ -122,7 +122,15 @@ class UserChar:
         User_Union_IMG_URL = str(User_Union_Information.find("img"))
         User_Union_IMG_URL = User_Union_IMG_URL[User_Union_IMG_URL.find("https:"):User_Union_IMG_URL.rfind(".png") + 4]
 
-        return [User_Union_grade, User_Union_Level, User_Union_IMG_URL]
+        # 유니온 전투력, 기준일
+        User_Union_Information = self.User_HTML.select(
+            "#app > div.card.border-bottom-0 > div > section > div.row.text-center > div:nth-child(3) > section > footer")[
+            0].find_all("span")
+        User_Union_power = str(User_Union_Information[0])
+        User_Union_power = User_Union_power[User_Union_power.find("</b> ") + 5:User_Union_power.rfind("</span>")]
+        User_Union_date = str(User_Union_Information[-1].string)
+
+        return [User_Union_grade, User_Union_Level, User_Union_power, User_Union_IMG_URL, User_Union_date]
 
     def get_achievement(self):
         """
@@ -141,7 +149,11 @@ class UserChar:
         User_achievement_IMG_URL = User_achievement_IMG_URL[
                                    User_achievement_IMG_URL.find("https:"):User_achievement_IMG_URL.rfind(".png") + 4]
 
-        return [User_achievement_grade, User_achievement_score, User_achievement_IMG_URL]
+        User_achievement_date = self.User_HTML.select(
+            "#app > div.card.border-bottom-0 > div > section > div.row.text-center > div:nth-child(4) > section > footer > div.user-summary-date > span"
+        )[0].string
+
+        return [User_achievement_grade, User_achievement_score, User_achievement_IMG_URL, User_achievement_date]
 
     def get_CharInformation(self):
         """
