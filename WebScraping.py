@@ -154,10 +154,3 @@ class UserChar:
         )[0].string
 
         return [User_achievement_grade, User_achievement_score, User_achievement_IMG_URL, User_achievement_date]
-
-    def get_CharInformation(self):
-        """
-        캐릭터의 종합 정보를 리턴
-        :return:
-        """
-        pass

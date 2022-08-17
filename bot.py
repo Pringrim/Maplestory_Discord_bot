@@ -25,7 +25,7 @@ async def show_help(ctx):
     result_Embed = discord.Embed(
         title="도움말", description="호출하기\n!<명령어>",
         color=side_bar_color)
-    result_Embed.add_field(name="!무릉, !시드, !유니온, !업적, !정보, !코디", value="Maple.gg 기준 정보를 불러옵니다.", inline=False)
+    result_Embed.add_field(name="!무릉, !시드, !유니온, !업적", value="Maple.gg 기준 정보를 불러옵니다.", inline=False)
     result_Embed.add_field(name="!추옵 <아이템 이름>", value="해당 무기의 추옵 정보를 불러옵니다.", inline=False)
     result_Embed.add_field(name="!추옵 <아이템 레벨>", value="해당 방어구의 추옵 정보를 불러옵니다.", inline=False)
     result_Embed.set_thumbnail(
