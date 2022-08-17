@@ -2,13 +2,13 @@ import requests
 from bs4 import BeautifulSoup
 import WebScraping as W
 
-User_name="닥닥"
+User_name="바늘킹"
 user_HTML = BeautifulSoup(requests.get(f'https://maple.gg/u/{User_name}').text, "html.parser")
 
-a=user_HTML.find_all("div", {"class": "pt-3 pb-2 pb-sm-3"})
+a=user_HTML
 
 
-print(a[0])
+print(a)
 
-b=W.UserChar("닥닥")
-print(b.get_TheSeed())
+b=W.UserChar("오뎅움")
+print(b.User_server)

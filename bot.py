@@ -1,3 +1,4 @@
+#variable.py는 숨김파일
 import variable
 import discord
 from discord.ext import commands
