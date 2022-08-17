@@ -10,5 +10,5 @@ a=user_HTML
 
 print(a)
 
-b=W.UserChar("오뎅움")
-print(b.User_server)
+b=W.UserChar("닥닥")
+print(b.get_TheSeed())

@@ -28,7 +28,8 @@ class UserChar:
         if self.is_valid():
             # 캐릭터의 외형
             self.User_IMG_URL = str(self.User_HTML.find("img", {"alt": self.User_name}))
-            self.User_IMG_URL = self.User_IMG_URL[self.User_IMG_URL.find("https"):self.User_IMG_URL.rfind(".png") + 4]
+            self.User_IMG_URL = self.User_IMG_URL[
+                                self.User_IMG_URL.find("https"):self.User_IMG_URL.rfind(".png") + 4].replace("s", "", 1)
 
             # 캐릭터의 서버
             self.User_server = str(self.User_HTML.select("h3"))
