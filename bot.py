@@ -46,7 +46,7 @@ async def show_MuLung(ctx, *name):
     name = name[0]
     User_Information = WebScraping.UserChar(name)
 
-    print(User_Information.User_IMG_URL)
+
     # 캐릭터가 존재하지 않을 때
     if not User_Information.is_valid():
         return_Embed = discord.Embed(title="검색되지 않았어요!", description="잘못된 이름을 입력한 것 같아요.", color=side_bar_color)
@@ -68,7 +68,7 @@ async def show_MuLung(ctx, *name):
     return_Embed = discord.Embed(title=name, description="", color=side_bar_color)
     return_Embed.add_field(name=f'{User_MuLung[0]} 층',
                            value=f'{User_MuLung[1]}\n{User_MuLung[2]} / {User_Information.User_Class}\n\n'
-                                 f'서버 {User_MuLung[3]}\n전체 {User_MuLung[4]}\n\n{User_MuLung[5]}',
+                                 f'{User_Information.User_server} {User_MuLung[3]}\n전체 {User_MuLung[4]}\n\n{User_MuLung[5]}',
                            inline=False)
 
     return_Embed.set_thumbnail(url=User_Information.User_IMG_URL)
@@ -110,7 +110,7 @@ async def show_TheSeed(ctx, *name):
     return_Embed = discord.Embed(title=name, description="", color=side_bar_color)
     return_Embed.add_field(name=f'해저 {User_TheSeed[0]} 층',
                            value=f'{User_TheSeed[1]}\n{User_TheSeed[2]} / {User_Information.User_Class}\n\n'
-                                 f'서버 {User_TheSeed[3]}\n전체 {User_TheSeed[4]}\n\n{User_TheSeed[5]}',
+                                 f'{User_Information.User_server} {User_TheSeed[3]}\n전체 {User_TheSeed[4]}\n\n{User_TheSeed[5]}',
                            inline=False)
     return_Embed.set_thumbnail(url=User_Information.User_IMG_URL)
     return_Embed.set_footer(text="더 시드 최고기록",
@@ -161,7 +161,6 @@ async def union(ctx, *name):
 
 @bot.command(aliases=["업적"])
 async def show_achievement(ctx, *name):
-    print(name)
     if not len(name):
         return_Embed = discord.Embed(title="!업적 <닉네임>", description="Maple.gg 기준 해당 캐릭터의 업적 기록을 보여줍니다.",
                                      color=side_bar_color)
@@ -202,7 +201,7 @@ async def show_achievement(ctx, *name):
 
 
 @bot.command(aliases=["추옵", "추가옵션"])
-async def option(ctx, *name):
+async def show_Item_options(ctx, *name):
     if not len(name):
         return_Embed = discord.Embed(title="추가옵션 도움말", color=side_bar_color)
         return_Embed.add_field(name="!추옵 <방어구 레벨>\n!추가옵션 <방어구 레벨>", value="해당 방어구의 추가옵션 수치를 보여줍니다.", inline=False)
@@ -304,3 +303,27 @@ async def option(ctx, *name):
                                     color=side_bar_color),
                 reference=ctx.message)
             return
+
+@bot.command(aliases=["정보"])
+async def show_User_Information(ctx, *name):
+    if not len(name):
+        return_Embed = discord.Embed(title="!정보 <닉네임>", description="Maple.gg 기준 해당 캐릭터의 기본 정보를 보여줍니다.",
+                                     color=side_bar_color)
+        await ctx.channel.send(embed=return_Embed, reference=ctx.message)
+        return
+    name = name[0]
+
+    User_Information = WebScraping.UserChar(name)
+    # 캐릭터가 존재하지 않을 때
+    if not User_Information.is_valid():
+        return_Embed = discord.Embed(title="검색되지 않았어요!", description="잘못된 이름을 입력한 것 같아요.", color=side_bar_color)
+        await ctx.channel.send(embed=return_Embed, reference=ctx.message)
+        return
+
+    return_Embed=discord.Embed(title=name, description="",color=side_bar_color)
+    return_Embed.add_field(name=User_Information.User_server,value=f'{User_Information.User_Level} / {User_Information.User_Class}\n'
+                                 f'인기도 : {User_Information.User_popularity}\n\n'
+                                 f'길드 : {User_Information.User_Guild}')
+    return_Embed.set_thumbnail(url=User_Information.User_IMG_URL)
+    return_Embed.set_footer(text="캐릭터 정보",icon_url=variable.Server_Icon[User_Information.User_server])
+    await ctx.channel.send(embed=return_Embed, reference=ctx.message)

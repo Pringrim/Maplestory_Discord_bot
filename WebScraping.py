@@ -25,11 +25,17 @@ class UserChar:
             self.User_server = str(self.User_HTML.select("h3"))
             self.User_server = self.User_server[self.User_server.find("alt=") + 5:self.User_server.find('" class')]
 
-            # 캐릭터의 레벨, 직업
+            # 캐릭터의 레벨, 직업, 인기도
             User_Information = self.User_HTML.find_all("li", {"class": "user-summary-item"})
             self.User_Level = User_Information[0].string
             self.User_Class = User_Information[1].string
+            self.User_popularity = User_Information[-1].find_all("span")[-1].string
             del User_Information
+
+            # 캐릭터의 길드
+            User_Guild = self.User_HTML.select(
+                "#user-profile > section > div.row.row-normal > div.col-lg-8 > div.row.row-normal.user-additional > div.col-lg-2.col-md-4.col-sm-4.col-12.mt-3 > a")
+            self.User_Guild = User_Guild[0].string if not User_Guild == [] else "(없음)"
 
     def is_valid(self):
         """
@@ -144,3 +150,12 @@ class UserChar:
         )[0].string
 
         return [User_achievement_grade, User_achievement_score, User_achievement_IMG_URL, User_achievement_date]
+
+    def get_User_Information(self):
+        """
+        캐릭터의 기본 정보를 리턴
+        """
+        if not self.User_HTML.select(
+                "#app > div.card.border-bottom-0 > div > section > div.row.text-center > div:nth-child(4) > section > div > div.mb-3 > img"
+        ) == []:
+            return None
