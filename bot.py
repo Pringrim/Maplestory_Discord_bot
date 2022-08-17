@@ -12,11 +12,11 @@ side_bar_color = 0xFFBB00
 
 @bot.event
 async def on_ready():
-    print(f'Login Bot - {bot.user}')  # 봇이 로그인 하면 로그인 정보를 출력
+    print(f'Login Bot - {bot.user}')
 
 
 async def on_message(message):
-    if message.author == bot.user:  # 봇이 보낸 메시지는 무시(유저만 받음)
+    if message.author == bot.user:
         return
 
 
@@ -210,7 +210,7 @@ async def option(ctx, *name):
         return_Embed.add_field(name="예시", value=f"!추옵 파프아대 또는 !추옵 파프니르 리스크홀더\n"
                                                 f"!추옵 라피스3형 또는 !추옵 라즐리3형", inline=False)
         return_Embed.set_footer(text="추가옵션",
-                            icon_url=variable.ICO_fire_of_rebirth)
+                                icon_url=variable.ICO_fire_of_rebirth)
         await ctx.channel.send(embed=return_Embed, reference=ctx.message)
         return
 
