@@ -1,7 +1,8 @@
-bot_token = "OTgzNDE5MzU3NzIxOTI3NzEw.GcSqbf.D3hLCB6_eY8eJJm86SBQ_QohFgqPsqdg5sCc54"
+import variable
 import discord
 from discord.ext import commands
 
+bot_token = variable.test_bot_token
 bot = commands.Bot(command_prefix=["!"])
 bot.remove_command('help')
 side_bar_color = 0xFFBB00

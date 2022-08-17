@@ -4,7 +4,6 @@ from discord.ext import commands
 import requests
 from bs4 import BeautifulSoup
 
-# token="OTgyOTUxOTgxODk3MzY3NTcy.GWvy0w.aDLNwz8grZPVx1TKoqQW9esaiaV-FrjI_F0F0I" #디스코드 개발자 페이지에서 봇의 토큰을 복사해서 입력한다.
 token = botpy.bot_token
 side_bar_color = 0xFFBB00
 botpy.bot.run(token)
